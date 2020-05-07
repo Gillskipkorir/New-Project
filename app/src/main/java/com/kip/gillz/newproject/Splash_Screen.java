@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.kip.gillz.newproject.UserPackage.Home;
+
 public class Splash_Screen extends AppCompatActivity {
 
     @Override

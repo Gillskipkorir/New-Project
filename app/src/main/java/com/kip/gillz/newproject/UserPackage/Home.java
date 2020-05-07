@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject;
+package com.kip.gillz.newproject.UserPackage;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -35,17 +34,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.kip.gillz.newproject.GPSTracker;
+import com.kip.gillz.newproject.R;
 import com.kip.gillz.newproject.utils.Tools;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class Home extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -59,19 +57,10 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
     LatLng latLng;
-    MarkerOptions markerOptions;
     ImageButton button;
     private BottomSheetBehavior bottomSheetBehavior;
     String state,country,subLocality,county,locality;
-    //UserSessionManager session;
-
-    //hardcoded latlng\
     Double xxx,yyy;
-    int speed;
-    String carreg;
-    String Username;
-    private static final int REQUEST_CODE_PERMISSION = 2;
-    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     // GPSTracker class
     GPSTracker gps;
 
@@ -79,7 +68,6 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -91,31 +79,18 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
 
         mapFragment.getMapAsync(this);
 
-        xxx= -0.352903;
-        yyy = 35.244817;
-        speed = 0;
-
         // create class object
         gps = new GPSTracker(Home.this);
-        // check if GPS enabled
         if(gps.canGetLocation()){
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
-                    + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+             xxx = gps.getLatitude();
+             yyy = gps.getLongitude();
+            Toast.makeText(getApplicationContext(), "Lat: "
+                    + xxx + "\nLong: " + yyy, Toast.LENGTH_LONG).show();
         }else{
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
+            Toast.makeText(getApplicationContext(), "Please Turn on you Gps", Toast.LENGTH_LONG).show();
             gps.showSettingsAlert();
         }
 
-        // todo: get value from previouas Avtivity
-        /*carreg = getIntent().getStringExtra("reg");
-        session = new UserSessionManager(Home.this);
-        HashMap<String, String> user = session.getUserDetails();
-        Username = user.get(UserSessionManager.KEY_ADMIN_USERNAME);*/
         initComponent();
 
         button= findViewById(R.id.map_button);
@@ -136,14 +111,10 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
                         }
                         else if (id==R.id.Satelite)
                         {
-                            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                            return true;
-                        }
-                        else if (id==R.id.Hybrid)
-                        {
                             mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                             return true;
                         }
+
                         return true;
                     }
                 });
@@ -183,10 +154,9 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-//Showing Current Location Marker on Map
+
+        //Showing Current Location Marker on Map
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        // markerOptions = new MarkerOptions();
-        //markerOptions.position(latLng);
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(new Criteria(), true);
@@ -253,39 +223,7 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
         mMap = Tools.configActivityMaps(googleMap);
         final MarkerOptions markerOptions;
         markerOptions = new MarkerOptions().position(new LatLng(xxx, yyy));
-        markerOptions.title("My Car");
-        if (speed>0 && speed<=40)
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            mMap.addMarker(markerOptions);
-        }
-        else if (speed>40 && speed<60)
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-            mMap.addMarker(markerOptions);
-        }
-        else if (speed>=60 && speed<=80)
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-            mMap.addMarker(markerOptions);
-        }
-        else if (speed>80)
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            mMap.addMarker(markerOptions);
-        }
-        else if (speed==0)
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            mMap.addMarker(markerOptions);
-        }
-        else
-        {
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-            mMap.addMarker(markerOptions);
-        }
-
-
+        markerOptions.title("My Location");
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
