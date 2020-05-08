@@ -92,4 +92,7 @@ dependencies {
     // For Geocoder and Open Street Maps
     implementation 'com.github.prolificinteractive.geocoder:geocoder-openstreetmap:0.1.0'
 
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+
+
 }

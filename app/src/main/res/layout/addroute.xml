@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|start"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_medium">
+
+        <ScrollView
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:id="@+id/email_login_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/spacing_large"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="Drop points between Start and End Points"/>
+
+                    <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="@dimen/spacing_large" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/rrrr"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:hint="NO"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:textAlignment="center"
+                            android:background="@drawable/textlabel"
+                            android:singleLine="true" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="@dimen/spacing_large" />
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/bt_close"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_rounded_primary"
+                        android:paddingLeft="@dimen/spacing_mlarge"
+                        android:paddingRight="@dimen/spacing_mlarge"
+                        android:text="Add these drop points"
+                        android:textColor="@android:color/white" />
+                    
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

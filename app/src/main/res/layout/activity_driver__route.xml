@@ -70,18 +70,7 @@
 
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="clickAction"
-                android:tint="@android:color/white"
-                app:backgroundTint="@color/colorPrimary"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_my_location_black_24dp"
-                tools:ignore="VectorDrawableCompat" />
+
 
 
             <LinearLayout
@@ -99,13 +88,13 @@
                     android:onClick="clickAction"
                     android:tint="@color/colorPrimary"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/ic_directions_bus_black_24dp"
+                    app:srcCompat="@drawable/ic_pin_drop_black_24dp"
                     tools:ignore="VectorDrawableCompat" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Drive"
+                    android:text="Add new Route"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
