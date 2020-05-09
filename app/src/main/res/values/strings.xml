@@ -1,8 +1,24 @@
 <resources>
-    <string name="app_name">New Project</string>
+    <string name="app_name">Pickup App</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="register">Dont have an account? Register</string>
     <string name="title_activity_driver__route">Map</string>
+    <string name="navigation">Navigation</string>
+    <string name="routes">Routes</string>
+    <string name="add_route">Add Route</string>
+    <string name="customer_login">Customer Login</string>
+    <string name="create_account">Register</string>
+    <string name="don_t_have_an_account">Don\'t have an Account ?</string>
+    <string name="driver_login">Driver Login</string>
+    <string name="email">Email...</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_accoun">Don\'t have an account?</string>
+    <string name="password">Password...</string>
+    <string name="logout">Logout</string>
+    <string name="i_m_a_driver">I\'m a Driver</string>
+    <string name="i_m_a_customer">I\'m a Customer</string>
+    <string name="satelite_map_view">Satelite Map View</string>
+    <string name="normal_map_view">Normal Map View</string>
 </resources>
