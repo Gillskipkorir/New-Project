@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_round"
@@ -15,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".CustomerLoginRegisterActivity" />
+        <activity android:name=".DriverLoginRegisterActivity" />
         <activity android:name=".Splash_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +34,8 @@
 
         <activity android:name=".LoginPackage.Login" />
         <activity android:name=".DriverPackage.Add_Route" />
-        <activity
-            android:name=".DriverPackage.Driver_Route"/>
+        <activity android:name=".DriverPackage.Driver_Route" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
