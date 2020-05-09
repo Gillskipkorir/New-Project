@@ -98,7 +98,7 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(Home.this,button);
-                popupMenu.getMenuInflater().inflate(R.menu.main,popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.home,popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {

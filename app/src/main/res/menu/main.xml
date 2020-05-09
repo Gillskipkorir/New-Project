@@ -2,10 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/Normal"
-        android:title="Normal Map View" />
+        android:id="@+id/on_off"
+        android:title="Navigation ON/OFF" />
     <item
-        android:id="@+id/Satelite"
-        android:title="Satelite Map View" />
+        android:id="@+id/navstart"
+        android:title="Start Navigation" />
+    <item
+        android:id="@+id/navstop"
+        android:title="Stop Navigation" />
 
 </menu>

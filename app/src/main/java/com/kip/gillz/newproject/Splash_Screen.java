@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.kip.gillz.newproject.DriverPackage.Add_Route;
+import com.kip.gillz.newproject.DriverPackage.Driver_Route;
 import com.kip.gillz.newproject.LoginPackage.Login;
 import com.kip.gillz.newproject.UserPackage.Home;
 
@@ -21,7 +22,7 @@ public class Splash_Screen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent= new Intent(Splash_Screen.this,Login.class);
+                Intent intent= new Intent(Splash_Screen.this,Driver_Route.class);
                 startActivity(intent);
                 finish();
             }

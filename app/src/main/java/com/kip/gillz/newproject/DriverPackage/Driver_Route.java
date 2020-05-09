@@ -1,8 +1,11 @@
 package com.kip.gillz.newproject.DriverPackage;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -12,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -56,6 +60,8 @@ import com.kip.gillz.newproject.utils.Tools;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -82,7 +88,7 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
     LatLng latLng;
-    ImageButton button;
+    ImageButton button ,btnroute;
     private BottomSheetBehavior bottomSheetBehavior;
     String state,country,subLocality,county,locality;
     Double xxx,yyy;
@@ -90,6 +96,7 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     GPSTracker gps;
     private LatLng mOrigin;
     private LatLng mDestination;
+    private LatLng mInterpoint;
     private Polyline mPolyline;
     ArrayList<LatLng> mMarkerPoints;
     int n;
@@ -97,32 +104,26 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver__route);
-
-
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager()
                         .findFragmentById(R.id.map);
-
         mapFragment.getMapAsync(this);
         mMarkerPoints = new ArrayList<>();
-
         // create class object
         gps = new GPSTracker(Driver_Route.this);
         if(gps.canGetLocation()){
             xxx = gps.getLatitude();
             yyy = gps.getLongitude();
-
         }else{
             Toast.makeText(getApplicationContext(), "Please Turn on you Gps", Toast.LENGTH_LONG).show();
             gps.showSettingsAlert();
         }
-        DroppointsDialog();
         initComponent();
-
         button= findViewById(R.id.map_button);
+        btnroute = findViewById(R.id.list_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,26 +133,126 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-
-                        if (id == R.id.Normal)
+                        if (id == R.id.on_off)
                         {
-                            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             return true;
                         }
-                        else if (id==R.id.Satelite)
+                        else if (id==R.id.navstart)
                         {
-                            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                            return true;
+                        }
+                        else if (id==R.id.navstop)
+                        {
+                            return true;
+                        }
+                        return true;
+
+
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+        btnroute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(Driver_Route.this,btnroute);
+                popupMenu.getMenuInflater().inflate(R.menu.route,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if (id == R.id.addnew)
+                        {
+                            mMarkerPoints.clear();
+                            mMap.clear();
+                            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                                @Override
+                                public void onMapClick(LatLng point) {
+                                    // Already two locations
+                                    if(mMarkerPoints.size()==3){
+
+                                        Toast.makeText(getApplicationContext(), "Only One Way Point Needed ", Toast.LENGTH_LONG).show();
+
+                                    }
+
+                                    else {
+                                        // Adding new item to the ArrayList
+                                        mMarkerPoints.add(point);
+                                        // Creating MarkerOptions
+                                        MarkerOptions options = new MarkerOptions();
+
+                                        // Setting the position of the marker
+                                        options.position(point);
+
+                                        if (mMarkerPoints.size() == 1) {
+                                            options.title("Start Point");
+                                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                        } else if (mMarkerPoints.size() == 2) {
+                                            Toast.makeText(getApplicationContext(), "Add One Way Point", Toast.LENGTH_LONG).show();
+                                            options.title("End Point");
+                                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                        } else
+                                            {
+                                            options.title("Way Point");
+                                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                        }
+
+                                        // Add new marker to the Google Map Android API V2
+                                        mMap.addMarker(options);
+
+                    if (mMarkerPoints.size() == 3) {
+                        mOrigin = mMarkerPoints.get(0);
+                        mDestination = mMarkerPoints.get(1);
+                        drawRoute();
+                        new LovelyStandardDialog(Driver_Route.this, LovelyStandardDialog.ButtonLayout.VERTICAL)
+                                .setTopColorRes(R.color.colorPrimary)
+                                .setButtonsColorRes(R.color.cyan_500)
+                                .setIcon(R.drawable.ic_airport_shuttle_black_24dp)
+                                .setTitle("Save this Route").setTitleGravity(Gravity.CENTER)
+                                .setMessage("Start Point:\n"+mOrigin+
+                                        "\n\n Way Point:\n"+mMarkerPoints.get(1)+
+                                        "\n\nEnd Point:\n"+mDestination+"\n")
+                                .setMessageGravity(Gravity.CENTER)
+                                .setCancelable(false)
+                                .setPositiveButton("Save", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v)
+                                    {
+                                        //TODO: SAVE DATA TO DB
+                                        Toast.makeText(getApplicationContext(), " Saved", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    Toast.makeText(getApplicationContext(), "Not Saved", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .show();
+                    }
+
+                                    }
+                                }
+                            });
+
+                            return true;
+                        }
+                        else if (id==R.id.viewroute)
+                        {
                             return true;
                         }
 
                         return true;
+
+
                     }
                 });
                 popupMenu.show();
             }
         });
     }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -164,14 +265,10 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                     mLocationRequest, this);
         }
-
     }
-
     @Override
     public void onConnectionSuspended(int i) {
-
     }
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -248,50 +345,6 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng point) {
-                // Already two locations
-                if(mMarkerPoints.size()>=n+2){
-                   /* mMarkerPoints.clear();
-                    mMap.clear();*/
-                    Toast.makeText(getApplicationContext(), "You have exeeded the Number of Drop Points", Toast.LENGTH_LONG).show();
-
-                }
-
-                else {
-                    // Adding new item to the ArrayList
-                    mMarkerPoints.add(point);
-                    // Creating MarkerOptions
-                    MarkerOptions options = new MarkerOptions();
-
-                    // Setting the position of the marker
-                    options.position(point);
-
-                    if (mMarkerPoints.size() == 1) {
-                        options.title("Start Point");
-                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    } else if (mMarkerPoints.size() == 2) {
-                        options.title("End Point");
-                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                    } else {
-                        options.title("Drop Point");
-                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                    }
-                    // Add new marker to the Google Map Android API V2
-                    mMap.addMarker(options);
-
-                    // Checks, whether start and end locations are captured
-                    if (mMarkerPoints.size() == n + 2) {
-                        mOrigin = mMarkerPoints.get(0);
-                        mDestination = mMarkerPoints.get(1);
-                        drawRoute();
-                    }
-
-                }
-            }
-        });
-
     }
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -323,20 +376,6 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     }
     private CameraUpdate zoomingLocation() {
         return CameraUpdateFactory.newLatLngZoom(new LatLng(xxx, yyy), 15);
-    }
-
-    //Buttons on the bottom page
-    public void clickAction(View view) {
-        int id = view.getId();
-        switch (id) {
-
-            case R.id.list_button:
-                mMarkerPoints.clear();
-                mMap.clear();
-                DroppointsDialog();
-                break;
-
-        }
     }
     private void initComponent() {
         LocationManager locationManager = (LocationManager)
@@ -391,7 +430,7 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     private void drawRoute(){
 
         // Getting URL to the Google Directions API
-        String url = getDirectionsUrl(mOrigin, mDestination);
+        String url = getDirectionsUrl(mOrigin,mDestination);
 
         DownloadTask downloadTask = new DownloadTask();
 
@@ -400,19 +439,34 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private String getDirectionsUrl(LatLng origin,LatLng dest){
+    private String getDirectionsUrl(LatLng origin , LatLng dest){
 
         // Origin of route
         String str_origin = "origin="+origin.latitude+","+origin.longitude;
 
+
         // Destination of route
         String str_dest = "destination="+dest.latitude+","+dest.longitude;
 
+        // Waypoints
+        LatLng point  = mMarkerPoints.get(2);
+        String  waypoint = "waypoints="+point.latitude + "," + point.longitude;
+
+/*
+        // Waypoints
+        String waypoints = "";
+        for(int i=n ;i<mMarkerPoints.size();i++){
+            LatLng point  =  mMarkerPoints.get(i);
+
+                waypoints += point.latitude + "," + point.longitude + "|";
+                waypoints = "waypoints="+waypoints;
+
+        }*/
         // Key
         String key = "key=" + getString(R.string.google_maps_key);
 
         // Building the parameters to the web service
-        String parameters = str_origin+"&"+str_dest+"&"+key;
+        String parameters = str_origin+"&"+str_dest+"&"+key+"&"+waypoint;
 
         // Output format
         String output = "json";
@@ -545,8 +599,8 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
 
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
-                lineOptions.width(8);
-                lineOptions.color(Color.RED);
+                lineOptions.width(10);
+                lineOptions.color(Color.BLUE);
             }
 
             // Drawing polyline in the Google Map for the i-th route
