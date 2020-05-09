@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/Normal"
-        android:title="Normal Map View" />
+        android:title="@string/normal_map_view" />
     <item
         android:id="@+id/Satelite"
-        android:title="Satelite Map View" />
+        android:title="@string/satelite_map_view" />
 
 </menu>

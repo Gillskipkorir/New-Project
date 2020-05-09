@@ -3,6 +3,7 @@ package com.kip.gillz.newproject.DriverPackage;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -50,8 +51,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kip.gillz.newproject.GPSTracker;
 import com.kip.gillz.newproject.R;
+import com.kip.gillz.newproject.UserPackage.Home;
+import com.kip.gillz.newproject.WelcomeActivity;
 import com.kip.gillz.newproject.utils.Tools;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
@@ -86,6 +91,9 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     private BottomSheetBehavior bottomSheetBehavior;
     String state,country,subLocality,county,locality;
     Double xxx,yyy;
+    private  TextView Logout;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     // GPSTracker class
     GPSTracker gps;
     private LatLng mOrigin;
@@ -97,6 +105,8 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver__route);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -150,6 +160,27 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
                 popupMenu.show();
             }
         });
+
+        Logout= (TextView) findViewById(R.id.logout);
+
+
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                mAuth.signOut();
+
+                LogOutUser();
+            }
+        });
+    }
+
+    public void LogOutUser()
+    {
+        Intent startPageIntent = new Intent(Driver_Route.this, WelcomeActivity.class);
+        startPageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(startPageIntent);
+        finish();
     }
 
     @Override

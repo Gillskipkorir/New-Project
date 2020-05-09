@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kip.gillz.newproject.DriverPackage.Driver_Route;
 import com.kip.gillz.newproject.UserPackage.Home;
 
 public class DriverLoginRegisterActivity extends AppCompatActivity
@@ -55,7 +56,7 @@ public class DriverLoginRegisterActivity extends AppCompatActivity
 
                 if(currentUser != null)
                 {
-                    Intent intent = new Intent(DriverLoginRegisterActivity.this, Home.class);
+                    Intent intent = new Intent(DriverLoginRegisterActivity.this, Driver_Route.class);
                     startActivity(intent);
                 }
             }
