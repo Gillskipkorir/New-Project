@@ -1,24 +1,23 @@
-package com.kip.gillz.newproject.LoginPackage;
+package com.kip.gillz.newproject.loginpackage;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kip.gillz.newproject.DriverPackage.Driver_Route;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kip.gillz.newproject.driverpackage.Driver_Route;
 import com.kip.gillz.newproject.R;
-import com.kip.gillz.newproject.UserPackage.Home;
 
 public class Driver extends Fragment {
     public Driver() {
     }
 
-    public static Driver newInstance() {
+    public static Fragment newInstance() {
         Driver fragment = new Driver();
         return fragment;
     }

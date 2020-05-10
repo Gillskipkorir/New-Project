@@ -1,11 +1,9 @@
-package com.kip.gillz.newproject.LoginPackage;
+package com.kip.gillz.newproject.loginpackage;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
-import com.kip.gillz.newproject.LoginPackage.Login;
 
 import java.util.HashMap;
 

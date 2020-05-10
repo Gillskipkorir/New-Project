@@ -2,13 +2,12 @@ package com.kip.gillz.newproject;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 
-import com.kip.gillz.newproject.DriverPackage.Add_Route;
-import com.kip.gillz.newproject.DriverPackage.Driver_Route;
-import com.kip.gillz.newproject.LoginPackage.Login;
-import com.kip.gillz.newproject.UserPackage.Home;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.kip.gillz.newproject.driverpackage.Driver_Route;
 
 public class Splash_Screen extends AppCompatActivity {
 

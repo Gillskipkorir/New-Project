@@ -1,13 +1,20 @@
-package com.kip.gillz.newproject.LoginPackage;
+package com.kip.gillz.newproject.loginpackage;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.design.widget.TabLayout;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentPagerAdapter;
+//import android.support.v4.view.ViewPager;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.kip.gillz.newproject.R;
 
 import java.util.ArrayList;
@@ -31,7 +38,7 @@ public class Login extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(User.newInstance(), "User");
+        adapter.addFragment(User.newInstance(), "Customer");
         adapter.addFragment(Driver.newInstance(), "Driver");
         viewPager.setAdapter(adapter);
     }

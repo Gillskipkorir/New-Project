@@ -1,8 +1,4 @@
-package com.kip.gillz.newproject.DriverPackage;
-
-import android.util.Log;
-
-import com.google.android.gms.maps.model.LatLng;
+package com.kip.gillz.newproject.driverpackage;
 
 import com.google.android.gms.maps.model.LatLng;
 
