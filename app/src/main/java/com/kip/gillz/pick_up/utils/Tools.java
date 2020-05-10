@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.utils;
+package com.kip.gillz.pick_up.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -43,7 +43,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.android.gms.maps.GoogleMap;
-import com.kip.gillz.newproject.R;
+import com.kip.gillz.pick_up.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

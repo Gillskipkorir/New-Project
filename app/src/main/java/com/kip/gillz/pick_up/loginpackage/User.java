@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.loginpackage;
+package com.kip.gillz.pick_up.loginpackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kip.gillz.newproject.R;
-import com.kip.gillz.newproject.userpackage.Home;
+import com.kip.gillz.pick_up.R;
+import com.kip.gillz.pick_up.userpackage.Home;
 
 public class User extends Fragment {
 

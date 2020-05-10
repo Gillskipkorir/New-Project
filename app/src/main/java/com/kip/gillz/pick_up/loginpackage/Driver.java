@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.loginpackage;
+package com.kip.gillz.pick_up.loginpackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kip.gillz.newproject.driverpackage.Driver_Route;
-import com.kip.gillz.newproject.R;
+import com.kip.gillz.pick_up.driverpackage.Driver_Route;
+import com.kip.gillz.pick_up.R;
 
 public class Driver extends Fragment {
     public Driver() {

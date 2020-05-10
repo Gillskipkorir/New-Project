@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kip.gillz.newproject">
+    package="com.kip.gillz.pick_up">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,24 +16,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash_Screen">
+        <activity android:name="com.kip.gillz.pick_up.Splash_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity"/>
-        <activity android:name=".CustomerLoginRegisterActivity"/>
-        <activity android:name=".DriverLoginRegisterActivity"/>
-        <activity android:name=".userpackage.Home" />
+        <activity android:name="com.kip.gillz.pick_up.WelcomeActivity"/>
+        <activity android:name="com.kip.gillz.pick_up.CustomerLoginRegisterActivity"/>
+        <activity android:name="com.kip.gillz.pick_up.DriverLoginRegisterActivity"/>
+        <activity android:name="com.kip.gillz.pick_up.userpackage.Home" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".loginpackage.Login"/>
-        <activity android:name=".driverpackage.add_route" />
-        <activity android:name=".driverpackage.Driver_Route"/>
+        <activity android:name="com.kip.gillz.pick_up.loginpackage.Login"/>
+        <activity android:name="com.kip.gillz.pick_up.driverpackage.add_route" />
+        <activity android:name="com.kip.gillz.pick_up.driverpackage.Driver_Route"/>
     </application>
 
 

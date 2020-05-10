@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject;
+package com.kip.gillz.pick_up;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,18 +22,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.kip.gillz.newproject.userpackage.Home;
+import com.kip.gillz.pick_up.driverpackage.Driver_Route;
 
-public class CustomerLoginRegisterActivity extends AppCompatActivity
+public class DriverLoginRegisterActivity extends AppCompatActivity
 {
-    private TextView CreateCustomerAccount;
-    private TextView TitleCustomer;
-    private Button LoginCustomerButton;
-    private Button RegisterCustomerButton;
-    private EditText CustomerEmail;
-    private EditText CustomerPassword;
+    private TextView CreateDriverAccount;
+    private TextView TitleDriver;
+    private Button LoginDriverButton;
+    private Button RegisterDriverButton;
+    private EditText DriverEmail;
+    private EditText DriverPassword;
 
-    private DatabaseReference customersDatabaseRef;
+    private DatabaseReference driversDatabaseRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
 
@@ -42,15 +42,13 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
     private FirebaseUser currentUser;
     String currentUserId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_login_register);
+        setContentView(R.layout.activity_driver_login_register);
 
         mAuth = FirebaseAuth.getInstance();
-
 
         firebaseAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -60,57 +58,54 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
 
                 if(currentUser != null)
                 {
-                    Intent intent = new Intent(CustomerLoginRegisterActivity.this, Home.class);
+                    Intent intent = new Intent(DriverLoginRegisterActivity.this, Driver_Route.class);
                     startActivity(intent);
                 }
             }
         };
 
 
-
-
-
-        CreateCustomerAccount = (TextView) findViewById(R.id.customer_register_link);
-        TitleCustomer = (TextView) findViewById(R.id.customer_status);
-        LoginCustomerButton = (Button) findViewById(R.id.customer_login_btn);
-        RegisterCustomerButton = (Button) findViewById(R.id.customer_register_btn);
-        CustomerEmail = (EditText) findViewById(R.id.customer_email);
-        CustomerPassword = (EditText) findViewById(R.id.customer_password);
+        CreateDriverAccount = (TextView) findViewById(R.id.create_driver_account);
+        TitleDriver = (TextView) findViewById(R.id.titlr_driver);
+        LoginDriverButton = (Button) findViewById(R.id.login_driver_btn);
+        RegisterDriverButton = (Button) findViewById(R.id.register_driver_btn);
+        DriverEmail = (EditText) findViewById(R.id.driver_email);
+        DriverPassword = (EditText) findViewById(R.id.driver_password);
         loadingBar = new ProgressDialog(this);
 
 
-        RegisterCustomerButton.setVisibility(View.INVISIBLE);
-        RegisterCustomerButton.setEnabled(false);
+        RegisterDriverButton.setVisibility(View.INVISIBLE);
+        RegisterDriverButton.setEnabled(false);
 
-        CreateCustomerAccount.setOnClickListener(new View.OnClickListener() {
+        CreateDriverAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                CreateCustomerAccount.setVisibility(View.INVISIBLE);
-                LoginCustomerButton.setVisibility(View.INVISIBLE);
-                TitleCustomer.setText("Customer Registration");
+                CreateDriverAccount.setVisibility(View.INVISIBLE);
+                LoginDriverButton.setVisibility(View.INVISIBLE);
+                TitleDriver.setText("Driver Registration");
 
-                RegisterCustomerButton.setVisibility(View.VISIBLE);
-                RegisterCustomerButton.setEnabled(true);
+                RegisterDriverButton.setVisibility(View.VISIBLE);
+                RegisterDriverButton.setEnabled(true);
             }
         });
 
 
-        RegisterCustomerButton.setOnClickListener(new View.OnClickListener() {
+        RegisterDriverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                String email = CustomerEmail.getText().toString();
-                String password = CustomerPassword.getText().toString();
+                String email = DriverEmail.getText().toString();
+                String password = DriverPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email))
                 {
-                    Toast.makeText(CustomerLoginRegisterActivity.this, "Please write your Email...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverLoginRegisterActivity.this, "Please write your Email...", Toast.LENGTH_SHORT).show();
                 }
 
                 if(TextUtils.isEmpty(password))
                 {
-                    Toast.makeText(CustomerLoginRegisterActivity.this, "Please write your Password...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverLoginRegisterActivity.this, "Please write your Password...", Toast.LENGTH_SHORT).show();
                 }
 
                 else
@@ -126,17 +121,17 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
                             if(task.isSuccessful())
                             {
                                 currentUserId = mAuth.getCurrentUser().getUid();
-                                customersDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(currentUserId);
-                                customersDatabaseRef.setValue(true);
+                                driversDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(currentUserId);
+                                driversDatabaseRef.setValue(true);
 
-                                Intent intent = new Intent(CustomerLoginRegisterActivity.this, Home.class);
+                                Intent intent = new Intent(DriverLoginRegisterActivity.this, Driver_Route.class);
                                 startActivity(intent);
 
                                 loadingBar.dismiss();
                             }
                             else
                             {
-                                Toast.makeText(CustomerLoginRegisterActivity.this, "Please Try Again. Error Occurred, while registering... ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DriverLoginRegisterActivity.this, "Please Try Again. Error Occurred, while registering... ", Toast.LENGTH_SHORT).show();
 
                                 loadingBar.dismiss();
                             }
@@ -146,21 +141,22 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
             }
         });
 
-        LoginCustomerButton.setOnClickListener(new View.OnClickListener() {
+
+        LoginDriverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                String email = CustomerEmail.getText().toString();
-                String password = CustomerPassword.getText().toString();
+                String email = DriverEmail.getText().toString();
+                String password = DriverPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email))
                 {
-                    Toast.makeText(CustomerLoginRegisterActivity.this, "Please write your Email...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverLoginRegisterActivity.this, "Please write your Email...", Toast.LENGTH_SHORT).show();
                 }
 
                 if(TextUtils.isEmpty(password))
                 {
-                    Toast.makeText(CustomerLoginRegisterActivity.this, "Please write your Password...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverLoginRegisterActivity.this, "Please write your Password...", Toast.LENGTH_SHORT).show();
                 }
 
                 else
@@ -175,18 +171,14 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
                         {
                             if(task.isSuccessful())
                             {
-                                Toast.makeText(CustomerLoginRegisterActivity.this, "Sign In , Successful...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DriverLoginRegisterActivity.this, "Sign In , Successful...", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(CustomerLoginRegisterActivity.this, Home.class);
+                                Intent intent = new Intent(DriverLoginRegisterActivity.this, Driver_Route.class);
                                 startActivity(intent);
-
-                                loadingBar.dismiss();
                             }
                             else
                             {
-                                Toast.makeText(CustomerLoginRegisterActivity.this, "Error Occurred, while Signing In... ", Toast.LENGTH_SHORT).show();
-
-                                loadingBar.dismiss();
+                                Toast.makeText(DriverLoginRegisterActivity.this, "Error Occurred, while Signing In... ", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -194,4 +186,22 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity
             }
         });
     }
+
+
+//    @Override
+//    protected void onStart()
+//    {
+//        super.onStart();
+//
+//        mAuth.addAuthStateListener(firebaseAuthListner);
+//    }
+//
+//
+//    @Override
+//    protected void onStop()
+//    {
+//        super.onStop();
+//
+//        mAuth.removeAuthStateListener(firebaseAuthListner);
+//    }
 }

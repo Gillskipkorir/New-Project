@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.loginpackage;
+package com.kip.gillz.pick_up.loginpackage;
 
 import android.content.Context;
 import android.content.Intent;

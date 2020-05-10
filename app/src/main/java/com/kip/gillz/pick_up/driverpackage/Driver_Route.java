@@ -1,8 +1,9 @@
-package com.kip.gillz.newproject.driverpackage;
+package com.kip.gillz.pick_up.driverpackage;
 
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -12,12 +13,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
-//import android.support.annotation.NonNull;
-//import android.support.annotation.Nullable;
-//import android.support.design.widget.BottomSheetBehavior;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v4.content.ContextCompat;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,8 +50,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.kip.gillz.newproject.GPSTracker;
-import com.kip.gillz.newproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.kip.gillz.pick_up.GPSTracker;
+import com.kip.gillz.pick_up.R;
+import com.kip.gillz.pick_up.WelcomeActivity;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.json.JSONObject;
@@ -87,6 +87,12 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     private BottomSheetBehavior bottomSheetBehavior;
     String state,country,subLocality,county,locality;
     Double xxx,yyy;
+
+   private  TextView Logout;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private DatabaseReference CustomerDatabaseRef;
+    private String driverID;
     // GPSTracker class
     GPSTracker gps;
     private LatLng mOrigin;
@@ -99,6 +105,10 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver__route);
+       // FirebaseApp.initializeApp(this);
+//        mAuth = FirebaseAuth.getInstance();
+//        currentUser = mAuth.getCurrentUser();
+//        driverID = mAuth.getCurrentUser().getUid();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -247,7 +257,24 @@ public class Driver_Route extends AppCompatActivity implements OnMapReadyCallbac
                 popupMenu.show();
             }
         });
+//        Logout=(TextView) findViewById(R.id.logout);
+//
+//        Logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//
+//                LogOutUser();
+//            }
+//        });
     }
+//    public void LogOutUser()
+//    {
+//        Intent startPageIntent = new Intent(Driver_Route.this, WelcomeActivity.class);
+//        startPageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(startPageIntent);
+//        finish();
+//    }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();

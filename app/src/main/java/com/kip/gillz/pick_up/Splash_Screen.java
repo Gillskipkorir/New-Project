@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject;
+package com.kip.gillz.pick_up;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kip.gillz.newproject.driverpackage.Driver_Route;
+import com.kip.gillz.pick_up.driverpackage.Driver_Route;
 
 public class Splash_Screen extends AppCompatActivity {
 

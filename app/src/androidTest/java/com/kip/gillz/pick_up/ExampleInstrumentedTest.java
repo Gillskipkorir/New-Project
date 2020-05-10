@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject;
+package com.kip.gillz.pick_up;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.kip.gillz.newproject", appContext.getPackageName());
+        assertEquals("com.kip.gillz.pick_up", appContext.getPackageName());
     }
 }

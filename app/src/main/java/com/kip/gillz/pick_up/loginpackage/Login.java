@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.loginpackage;
+package com.kip.gillz.pick_up.loginpackage;
 
 //import android.support.design.widget.TabLayout;
 //import android.support.v4.app.Fragment;
@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.kip.gillz.newproject.R;
+import com.kip.gillz.pick_up.R;
 
 import java.util.ArrayList;
 import java.util.List;

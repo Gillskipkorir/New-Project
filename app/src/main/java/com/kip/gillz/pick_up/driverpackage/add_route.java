@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.driverpackage;
+package com.kip.gillz.pick_up.driverpackage;
 
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kip.gillz.newproject.R;
+import com.kip.gillz.pick_up.R;
 
 public class add_route extends AppCompatActivity {
     Button button;

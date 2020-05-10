@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.utils;
+package com.kip.gillz.pick_up.utils;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

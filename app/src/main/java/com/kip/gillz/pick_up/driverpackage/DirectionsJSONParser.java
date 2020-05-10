@@ -1,4 +1,4 @@
-package com.kip.gillz.newproject.driverpackage;
+package com.kip.gillz.pick_up.driverpackage;
 
 import com.google.android.gms.maps.model.LatLng;
 

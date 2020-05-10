@@ -1,7 +1,8 @@
-package com.kip.gillz.newproject.userpackage;
+package com.kip.gillz.pick_up.userpackage;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -39,9 +40,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.kip.gillz.newproject.GPSTracker;
-import com.kip.gillz.newproject.R;
-import com.kip.gillz.newproject.utils.Tools;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.kip.gillz.pick_up.GPSTracker;
+import com.kip.gillz.pick_up.R;
+import com.kip.gillz.pick_up.WelcomeActivity;
+import com.kip.gillz.pick_up.utils.Tools;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,10 +70,17 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
     // GPSTracker class
     GPSTracker gps;
 
+    private TextView Logout;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_home);
+//        mAuth = FirebaseAuth.getInstance();
+//        currentUser = mAuth.getCurrentUser();
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -123,7 +134,25 @@ public class Home extends AppCompatActivity implements OnMapReadyCallback,
                 popupMenu.show();
             }
         });
+
+//        Logout=(TextView) findViewById(R.id.logout);
+//
+//        Logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//
+//                LogOutUser();
+//            }
+//        });
     }
+//    public void LogOutUser()
+//    {
+//        Intent startPageIntent = new Intent(Home.this, WelcomeActivity.class);
+//        startPageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(startPageIntent);
+//        finish();
+//    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
